@@ -1,63 +1,68 @@
 [
     {
-        "question": "Какой язык программирования используется для создания веб-сайтов?",
-        "options": ["PHP", "Java", "Python", "JavaScript"],
-        "correct_options": ["PHP", "JavaScript"],
-        "type": "multiple"
+        "question": "Какой язык программирования используется для создания серверных приложений?",
+        "type": "single",
+        "options": ["PHP", "JavaScript", "Python"],
+        "correct_options": [0]
+    },
+    {
+        "question": "Какие из языков программирования вам известны?",
+        "type": "multiple",
+        "options": ["PHP", "Python", "Ruby", "JavaScript"],
+        "correct_options": [0, 1]
     },
     {
         "question": "Какой язык используется для создания динамических веб-страниц?",
+        "type": "single",
         "options": ["HTML", "CSS", "PHP", "JavaScript"],
-        "correct_options": ["PHP"],
-        "type": "single"
+        "correct_options": [2]
     },
     {
         "question": "Какой язык программирования является основным для веб-разработки на стороне клиента?",
         "type": "single",
         "options": ["Python", "JavaScript", "C++", "Ruby"],
-        "correct_options": ["JavaScript"]
+        "correct_options": [1]
     },
     {
         "question": "Какое расширение у файла с таблицей в Excel?",
         "type": "single",
         "options": [".xls", ".csv", ".xlsx", ".docx"],
-        "correct_options": [".xlsx"]
+        "correct_options": [2]
     },
     {
         "question": "Какой тег HTML используется для вставки изображения?",
         "type": "single",
         "options": ["img", "image", "src", "pic"],
-        "correct_options": ["img"]
+        "correct_options": [0]
     },
     {
         "question": "Какой протокол используется для безопасной передачи данных в интернете?",
         "type": "single",
         "options": ["HTTP", "HTTPS", "FTP", "SMTP"],
-        "correct_options": ["HTTPS"]
+        "correct_options": [1]
     },
     {
         "question": "Что такое массив в языке программирования PHP?",
         "type": "single",
         "options": ["Тип данных для хранения чисел", "Переменная, которая может хранить несколько значений", "Переменная, которая хранит одно значение", "Тип данных для хранения строк"],
-        "correct_options": ["Переменная, которая может хранить несколько значений"]
+        "correct_options": [1]
     },
     {
         "question": "Какое ключевое слово используется для объявления переменной в языке PHP?",
         "type": "single",
         "options": ["var", "let", "int", "const"],
-        "correct_options": ["var"]
+        "correct_options": [0]
     },
     {
         "question": "Какой элемент HTML используется для создания гиперссылки?",
         "type": "single",
         "options": ["a", "link", "href", "button"],
-        "correct_options": ["<a>"]
+        "correct_options": [0]
     },
     {
         "question": "Какой тип данных представляет собой число с плавающей точкой в PHP?",
         "type": "single",
         "options": ["int", "float", "string", "bool"],
-        "correct_options": ["float"]
+        "correct_options": [1]
     }
 ]
-

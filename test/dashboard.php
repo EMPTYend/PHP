@@ -2,6 +2,11 @@
 require_once 'includes/security.php';
 require_once 'includes/functions.php';
 
+/**
+ * Загружает и отображает результаты тестирования.
+ * Проверяет наличие результатов и выводит их в виде таблицы.
+ */
+
 // Загрузка результатов из файла
 $results = load_results();
 
@@ -33,12 +38,12 @@ if (empty($results)) {
                 </tr>
                 <?php foreach ($results as $result): ?>
                     <tr>
-                        <td><?php echo $result['name']; ?></td>
-                        <td><?php echo $result['score']['correct_answers']; ?> из <?php echo $result['score']['total_questions']; ?></td>
+                        <td><?php echo htmlspecialchars($result['name']); ?></td>
+                        <td><?php echo (int) $result['score']['correct_answers']; ?> из <?php echo (int) $result['score']['total_questions']; ?></td>
                         <td>
                             <?php
-                                $correct_answers = $result['score']['correct_answers'];
-                                $total_questions = $result['score']['total_questions'];
+                                $correct_answers = (int) $result['score']['correct_answers'];
+                                $total_questions = (int) $result['score']['total_questions'];
                                 $percentage = ($total_questions > 0) ? round(($correct_answers / $total_questions) * 100, 2) : 0;
                                 echo $percentage . '%';
                             ?>

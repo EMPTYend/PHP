@@ -2,13 +2,19 @@
 require_once 'security.php';
 
 /**
- * Загрузка вопросов из JSON файла.
- * 
+ * Загружает вопросы из JSON-файла.
+ *
  * @return array Массив с вопросами.
  */
 function load_questions() {
     return json_decode(file_get_contents('data/questions.json'), true);
 }
+
+/**
+ * Загружает результаты тестов из JSON-файла.
+ *
+ * @return array Массив с результатами тестов.
+ */
 function load_results() {
     $filePath = 'data/results.json';
     if (file_exists($filePath)) {
@@ -19,17 +25,18 @@ function load_results() {
 }
 
 /**
- * Сохранение результатов теста в файл.
- * 
+ * Сохраняет результаты теста в файл.
+ *
  * @param string $name Имя пользователя.
- * @param float $score Баллы пользователя.
+ * @param array $score Массив с результатами теста (количество правильных ответов и общее количество вопросов).
+ *
+ * @return void
  */
 function save_results($name, $score) {
     $file = 'data/results.json';
 
     // Проверка существования файла
     if (!file_exists($file)) {
-        // Если файл не существует, создаём пустой массив
         file_put_contents($file, json_encode([]));
     }
 
@@ -55,17 +62,15 @@ function save_results($name, $score) {
     file_put_contents($file, json_encode($results, JSON_PRETTY_PRINT));
 }
 
-
-
-
 /**
- * Подсчет результатов теста.
- * 
- * @param array $options Ответы пользователя.
+ * Подсчитывает результаты теста.
+ *
+ * @param array $options Ответы пользователя, где ключ - индекс вопроса, а значение - выбранные варианты.
  * @param array $questions Вопросы теста.
- * @return float Процент правильных ответов.
+ *
+ * @return array Ассоциативный массив с количеством правильных ответов и общим количеством вопросов.
  */
-    function calculate_score($options, $questions) {
+function calculate_score($options, $questions) {
     $score = 0;
     $totalQuestions = count($questions); // Общее количество вопросов
     $totalCorrectAnswers = 0; // Общее количество правильных ответов
@@ -81,40 +86,24 @@ function save_results($name, $score) {
     foreach ($questions as $index => $question) {
         // Получаем правильные ответы для текущего вопроса
         $correctOptions = $question['correct_options'];
-        $totalCorrectAnswers += count($correctOptions); // Суммируем все правильные ответы
-
-        // Проверка на существование ответа пользователя для этого вопроса
-        if (isset($options[$index])) {
-            if (is_array($options[$index])) {
-                // Для вопросов с несколькими правильными ответами
-                $correctAnswers = count(array_intersect($options[$index], $correctOptions)); // Считаем пересечение
-                $score += $correctAnswers; // Добавляем количество правильных ответов
-            } else {
-                // Для вопросов с одним правильным ответом
-                if (in_array($options[$index], $correctOptions)) {
-                    $score++; // Добавляем 1 балл за правильный ответ
-                }
+        
+        // Если вопрос с несколькими правильными ответами
+        if ($question['type'] === 'multiple') {
+            $totalCorrectAnswers += count($correctOptions); // Суммируем все правильные ответы
+            if (isset($options[$index]) && is_array($options[$index])) {
+                $score += count(array_intersect($options[$index], $correctOptions)); // Считаем пересечение
+            }
+        } else {
+            // Для вопросов с одним правильным ответом
+            $totalCorrectAnswers += 1; // Один правильный ответ на вопрос
+            if (isset($options[$index]) && in_array($options[$index], $correctOptions)) {
+                $score++; // Добавляем 1 балл за правильный ответ
             }
         }
     }
 
-    // Если нет правильных ответов, возвращаем ноль
-    if ($totalCorrectAnswers === 0) {
-        return [
-            'correct_answers' => 0,
-            'total_questions' => 0
-        ];
-    }
-
-    // Подсчитываем процент правильных ответов
-    $percentage = ($score / $totalCorrectAnswers) * 100;
-    
     return [
         'correct_answers' => $score,
-        'total_questions' => $totalCorrectAnswers
+        'total_questions' => $totalQuestions
     ];
 }
-
-
-
-?>
