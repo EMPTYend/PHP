@@ -50,7 +50,7 @@
     {
         "question": "Какое ключевое слово используется для объявления переменной в языке PHP?",
         "type": "single",
-        "options": ["var", "let", "int", "const"],
+        "options": ["$", "let", "int", "const"],
         "correct_options": [0]
     },
     {

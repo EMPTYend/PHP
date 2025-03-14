@@ -33,12 +33,12 @@ if (file_exists($questionsFile)) {
 </head>
 <body>
     <h1>Тест</h1>
-    <form action="submit.php" method="post">
+    <form action="submit.php" method="post" novalidate>
     <label>Введите ваше имя:</label>
     <input type="text" name="username" required>
     <br><br>
 
-    <?php foreach ($questions as $index => $question): ?>
+    <?php foreach ($questions as $index => $question): ?><div>
         <p><?php echo ($index + 1) . ". " . $question['question']; ?></p>
         <?php if ($question['type'] === 'single'): ?>
             <?php foreach ($question['options'] as $key => $answer): ?>
@@ -56,6 +56,7 @@ if (file_exists($questionsFile)) {
             <?php endforeach; ?>
         <?php endif; ?>
         <br>
+        </div>
     <?php endforeach; ?>
 
     <button type="submit">Завершить тест</button>

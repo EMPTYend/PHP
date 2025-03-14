@@ -72,10 +72,9 @@ function save_results($name, $score) {
  */
 function calculate_score($options, $questions) {
     $score = 0;
-    $totalQuestions = count($questions); // Общее количество вопросов
-    $totalCorrectAnswers = 0; // Общее количество правильных ответов
+    $totalQuestions = count($questions);
+    $totalCorrectAnswers = 0;
 
-    // Проверяем, есть ли вопросы
     if ($totalQuestions === 0) {
         return [
             'correct_answers' => 0,
@@ -84,20 +83,23 @@ function calculate_score($options, $questions) {
     }
 
     foreach ($questions as $index => $question) {
-        // Получаем правильные ответы для текущего вопроса
         $correctOptions = $question['correct_options'];
         
-        // Если вопрос с несколькими правильными ответами
         if ($question['type'] === 'multiple') {
-            $totalCorrectAnswers += count($correctOptions); // Суммируем все правильные ответы
+            $totalCorrectAnswers++;
             if (isset($options[$index]) && is_array($options[$index])) {
-                $score += count(array_intersect($options[$index], $correctOptions)); // Считаем пересечение
+                $selectedOptions = $options[$index];
+                $correctCount = count(array_intersect($selectedOptions, $correctOptions));
+                $incorrectCount = count(array_diff($selectedOptions, $correctOptions));
+                
+                if ($correctCount === count($correctOptions) && $incorrectCount === 0) {
+                    $score++;
+                }
             }
         } else {
-            // Для вопросов с одним правильным ответом
-            $totalCorrectAnswers += 1; // Один правильный ответ на вопрос
+            $totalCorrectAnswers++;
             if (isset($options[$index]) && in_array($options[$index], $correctOptions)) {
-                $score++; // Добавляем 1 балл за правильный ответ
+                $score++;
             }
         }
     }
@@ -107,3 +109,4 @@ function calculate_score($options, $questions) {
         'total_questions' => $totalQuestions
     ];
 }
+
