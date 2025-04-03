@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "date": "2019-01-01",
+        "amount": 100.00,
+        "description": "Payment for groceries",
+        "merchant": "SuperMart"
+    },
+    {
+        "id": 2,
+        "date": "2020-02-15",
+        "amount": 75.50,
+        "description": "Dinner with friends",
+        "merchant": "Local Restaurant"
+    },
+    {
+        "id": 3,
+        "date": "2021-06-10",
+        "amount": 250.75,
+        "description": "Online purchase",
+        "merchant": "Amazon"
+    }
+]
