@@ -1,4 +1,12 @@
 <?php
+/**
+ * Простая реализация функции filter_input_array.
+ * 
+ * @param int   $type       Тип источника (например, INPUT_POST или INPUT_GET)
+ * @param array $definition Массив с ключами и соответствующими фильтрами
+ * 
+ * @return array Ассоциативный массив с отфильтрованными значениями
+ */
 function filter_input_array($type, $definition) {
     $data = [];
     foreach ($definition as $key => $filter) {

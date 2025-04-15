@@ -1,32 +1,57 @@
-
 <?php
+
+/**
+ * Обработка формы добавления рецепта
+ * 
+ * При успешной валидации данные сохраняются в файл `recipes.txt`,
+ * иначе — выводятся ошибки.
+ */
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Для отладки: выводим данные, полученные методом POST
+
+    // Сохраняем POST-данные для отладки
     file_put_contents('debug.txt', print_r($_POST, true));
-    
+
+    // Получение и фильтрация данных из формы
+    /** @var string $title Название рецепта */
     $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+    /** @var string $category Категория рецепта */
     $category = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+    /** @var string $ingredients Ингредиенты */
     $ingredients = filter_input(INPUT_POST, 'ingredients', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+    /** @var string $description Описание рецепта */
     $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $tags = isset($_POST['tags']) ? $_POST['tags'] : [];
-    $steps = isset($_POST['steps']) ? $_POST['steps'] : [];
-    
-    // Вывод для отладки (можно временно убрать)
+
+    /** @var array $tags Теги (без фильтрации — массив строк) */
+    $tags = isset($_POST['tags']) && is_array($_POST['tags']) ? array_map('htmlspecialchars', $_POST['tags']) : [];
+
+    /** @var array $steps Шаги (без фильтрации — массив строк) */
+    $steps = isset($_POST['steps']) && is_array($_POST['steps']) ? array_map('htmlspecialchars', $_POST['steps']) : [];
+
+    // Вывод отладочной информации (можно отключить позже)
     echo "title: " . htmlspecialchars($title) . "<br>";
     echo "category: " . htmlspecialchars($category) . "<br>";
     echo "ingredients: " . htmlspecialchars($ingredients) . "<br>";
     echo "description: " . htmlspecialchars($description) . "<br>";
-    echo "tags: " . print_r($tags, true) . "<br>";
-    echo "steps: " . print_r($steps, true) . "<br>";
+    echo "tags: " . implode(', ', $tags) . "<br>";
+    echo "steps:<br><ul>";
+    foreach ($steps as $step) {
+        echo "<li>$step</li>";
+    }
+    echo "</ul>";
 
-    // Простейшая валидация (например, проверка обязательного поля title)
+    // Простая валидация
     $errors = [];
+
     if (empty($title)) {
         $errors[] = 'Название рецепта обязательно.';
     }
 
+    // Если ошибок нет — сохраняем рецепт
     if (empty($errors)) {
-        // Формируем массив рецепта
         $recipe = [
             'title'       => $title,
             'category'    => $category,
@@ -36,31 +61,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'steps'       => $steps
         ];
 
-        // Определяем путь к файлу для хранения рецептов
+        /** @var string $filePath Путь к файлу с рецептами */
         $filePath = __DIR__ . '/../../storage/recipes.txt';
-        
-        // Читаем существующие данные
+
+        // Чтение и декодирование текущих данных
         $existingData = file_get_contents($filePath);
         $data = $existingData ? json_decode($existingData, true) : [];
         if (!is_array($data)) {
             $data = [];
         }
-        
-        // Добавляем новый рецепт
+
+        // Добавление рецепта и сохранение
         $data[] = $recipe;
-        
-        // Сохраняем обновленные данные в файл
         file_put_contents($filePath, json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
-        
-        // Перенаправляем на главную страницу или на страницу с рецептами
+
+        // Перенаправление на главную страницу
         header('Location: /public/index.php');
         exit;
+
     } else {
-        // Если есть ошибки, выводим их
+        // Отображение ошибок
+        echo "<h3>Ошибки:</h3><ul>";
         foreach ($errors as $error) {
-            echo "<p>$error</p>";
+            echo "<li>" . htmlspecialchars($error) . "</li>";
         }
+        echo "</ul>";
     }
+
 } else {
     echo "Неверный метод запроса.";
 }
