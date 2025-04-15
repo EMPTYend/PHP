@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * This file is the entry point of the application.
+ * It loads transactions from a JSON file, sorts them by date and amount, and performs further operations.
+ */
+
 declare(strict_types=1);
 
 require_once 'functions.php';
@@ -38,6 +43,11 @@ sortTransactionsByAmount($transactions);
             </tr>
         </thead>
         <tbody>
+            <!-- /**
+             * Renders a table row for each transaction in the $transactions array.
+             *
+             * @param array $transactions The array of transactions.
+             */ -->
             <?php foreach ($transactions as $transaction) : ?>
                 <tr>
                     <td><?= htmlspecialchars((string)$transaction["id"]); ?></td>
