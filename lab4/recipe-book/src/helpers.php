@@ -7,7 +7,7 @@
  * 
  * @return array Ассоциативный массив с отфильтрованными значениями
  */
-function filter_input_array($type, $definition) {
+function filters_input_array($type, $definition) {
     $data = [];
     foreach ($definition as $key => $filter) {
         $data[$key] = filter_input($type, $key, $filter);

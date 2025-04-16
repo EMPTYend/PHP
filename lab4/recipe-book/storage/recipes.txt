@@ -173,5 +173,68 @@
             "DDDDDD",
             "DDDDD"
         ]
+    },
+    {
+        "title": "dcs",
+        "category": "Завтрак",
+        "ingredients": "cds",
+        "description": "sd",
+        "tags": [
+            "Полезно"
+        ],
+        "steps": [
+            "cod"
+        ]
+    },
+    {
+        "title": "pdf",
+        "category": "Завтрак",
+        "ingredients": "sdf",
+        "description": "dsfdsf",
+        "tags": [
+            "Вегетарианское"
+        ],
+        "steps": [
+            "f"
+        ]
+    },
+    {
+        "title": "dadas",
+        "category": "Завтрак",
+        "ingredients": "asdas",
+        "description": "adasdas",
+        "tags": [
+            "Быстро"
+        ],
+        "steps": [
+            "dasdas",
+            "dfghj"
+        ]
+    },
+    {
+        "title": "1234567890",
+        "category": "Завтрак",
+        "ingredients": "234567890",
+        "description": "098765432",
+        "tags": [
+            "Быстро"
+        ],
+        "steps": [
+            "13124",
+            "14241",
+            "412421"
+        ]
+    },
+    {
+        "title": "sadsadd",
+        "category": "Завтрак",
+        "ingredients": "dsadddddddd",
+        "description": "dddddddd",
+        "tags": [
+            "Быстро"
+        ],
+        "steps": [
+            "dddddddd"
+        ]
     }
 ]

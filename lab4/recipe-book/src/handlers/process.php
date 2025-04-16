@@ -73,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Добавление рецепта и сохранение
         $data[] = $recipe;
+        
         file_put_contents($filePath, json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
 
         // Перенаправление на главную страницу

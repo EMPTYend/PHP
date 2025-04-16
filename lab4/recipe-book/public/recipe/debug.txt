@@ -1,0 +1,17 @@
+Array
+(
+    [title] => sadsadd
+    [category] => Завтрак
+    [ingredients] => dsadddddddd
+    [description] => dddddddd
+    [tags] => Array
+        (
+            [0] => Быстро
+        )
+
+    [steps] => Array
+        (
+            [0] => dddddddd
+        )
+
+)
